@@ -1,37 +1,92 @@
-[tool.poetry]
-authors = ["Andrea Mignone <andrea.mignone@virgilio.it>"]
-description = "Sync .pre-commit-config.yaml repos starting from poetry.lock"
-name = "sync_with_poetry"
-version = "1.2.0"
-
-[tool.poetry.dependencies]
-python = ">=3.9"
-
-PyYAML = "^6.0.1"
-tomlkit = "^0.7.2"
-
-[tool.poetry.group.dev.dependencies]
-coverage = [
-  {extras = [
-    "toml",
-  ], version = "^6.0", python = ">=3.6,<3.7"},
-  {extras = [
-    "toml",
-  ], version = ">=6.5", python = ">=3.7"},
+[project]
+name = "sync-with-uv"
+version = "0.1.0"
+description = "Sync .pre-commit-config.yaml repos starting from uv.lock"
+authors = [{ name = "Dribia Data Research", email = "code@dribia.com" }]
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml>=6.0.2,<7",
+    "tomlkit>=0.13.3,<0.14",
 ]
-mypy = "^0.971"
-pre-commit = "^3.8.0"
-pytest = "^6.2"
-pytest-cov = "^4.0.0"
-ruff = "^0.6.8"
-types-PyYAML = "^6.0.1"
 
-[tool.poetry.scripts]
-swp = "sync_with_poetry.swp:main"
+[project.scripts]
+swu = "sync_with_uv.main:main"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0,<5",
+]
+ci = [
+    "setuptools>=80.9.0,<81",
+]
+lint = [
+    "mypy==1.16.0",
+    "ruff==0.11.13",
+    "types-pyyaml>=6.0.12,<7",
+]
+test = [
+    "pytest>=8.4.0,<9",
+    "pytest-cov>=6.1.1,<7",
+    "coverage[toml]>=6.5",
+]
+
+[tool.uv]
+required-version = ">=0.7.8,<1.0"
+default-groups = [
+    "dev",
+    "ci",
+    "lint",
+    "test",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
 addopts = "-svv"
 testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # convention
+    "B",  # flake8-bugbear
+    "D",  # pydocstyle
+    "UP",  # pyupgrade
+    "N",  # pep8-naming
+    "NPY",  # numpy
+    "PD",   # pandas
+    "RUF",  # ruff
+    "PTH",  # pathlib
+    "SIM",  # simplify
+    "RET",  # return
+    "RSE",  # raise
+    "Q",  # quotes
+    "G",  # logging-format
+    "LOG",  # logging
+    "ISC",  # implicit str concat
+    "C4",  # comprehensions
+    "COM",  # commas
+    "TD",  # to-do
+    "INT",  # gettext
+    "TRY",  # tryceratops
+    "TID",  # tidy imports
+]
+ignore = [
+    "COM812",  # allow missing trailing comma
+]
+
+[tool.ruff.lint.isort]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.mypy]
 disallow_incomplete_defs = true
@@ -41,12 +96,3 @@ files = ["**/*.py"]
 namespace_packages = true
 show_error_codes = true
 
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core"]
-
-[tool.ruff]
-line-length = 100
-
-[tool.ruff.format]
-docstring-code-format = true

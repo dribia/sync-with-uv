@@ -10,7 +10,8 @@ A pre-commit hook for keeping in sync the repos `rev` in
 `.pre-commit-config.yaml` with the packages version locked into `uv.lock`. Check
 out [pre-commit.com](https://pre-commit.com/) for more about the main framework.
 
-> [!IMPORTANT] This repository is strongly inspired in
+> [!IMPORTANT]
+> This repository is strongly inspired in
 > [sync_with_poetry](https://github.com/floatingpurr/sync_with_poetry).
 
 ## What problem does this hook help us solve?

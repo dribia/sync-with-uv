@@ -6,15 +6,12 @@ making a change.
 
 # Set up your dev environment
 
-This repo exploits [Poetry](https://python-poetry.org/) and
+This repo exploits [uv](https://docs.astral.sh/uv/) and
 [pre-commit.com](https://pre-commit.com/). Upon forking this repo, run the
 following commands:
 
 ```bash
-$ poetry install        # install main and dev dependencies
-$ pre-commit install    # install local pre-commit hooks
-$                       # you are done!
+$ uv sync                      # install dependencies
+$ uv run pre-commit install    # install local pre-commit hooks
+$                              # you are done!
 ```
-
-In order to set up VS Code for this project, settings (i.e., [.vscode](.vscode))
-are checked in the codebase. Just ignore such a folder if you do not need it.

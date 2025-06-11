@@ -1,10 +1,13 @@
-import pytest
-from py._path.local import LocalPath
+"""Test frozen revisions handling in sync_with_uv."""
 
-from sync_with_poetry import swp
+from pathlib import Path
+
+import pytest
+
+from sync_with_uv import main
 
 # test cases for frozen revisions
-# all these packages have version 1.0.0 in poetry.lock
+# all these packages have version 1.0.0 in uv.lock
 TEST_REVS = [
     "    rev: 1.0.0\n",
     "    rev: 1.0.0 # frozen\n",
@@ -49,7 +52,8 @@ assert len(TEST_REVS) == len(TEST_REVS_UNFROZEN) == len(TEST_REVS_FROZEN)
 
 
 def config_content(rev_line: str) -> str:
-    return "repos:\n" "  - repo: test\n" + rev_line + "    hooks:\n" "      - id: test\n"
+    """Generate the pre-commit config content with the given revision line."""
+    return "repos:\n  - repo: test\n" + rev_line + "    hooks:\n      - id: test\n"
 
 
 LOCK_CONTENT = (
@@ -70,21 +74,25 @@ DEPENDENCY_MAPPING = {
 }
 
 
-def run_and_check(tmpdir: LocalPath, rev_line: str, expected: str, frozen: bool) -> None:
-    lock_file = tmpdir.join("poetry.lock")
-    lock_file.write(LOCK_CONTENT)
-    config_file = tmpdir.join(".pre-commit-yaml")
+def run_and_check(tmpdir: Path, rev_line: str, expected: str, frozen: bool) -> None:
+    """Run the sync_repos function and check the output."""
+    lock_file = tmpdir / "uv.lock"
+    with lock_file.open("w") as f:
+        f.write(LOCK_CONTENT)
+    config_file = tmpdir / ".pre-commit-yaml"
     config = config_content(rev_line)
-    config_file.write(config)
+    with config_file.open("w") as f:
+        f.write(config)
 
-    retv = swp.sync_repos(
-        lock_file.strpath,
+    retv = main.sync_repos(
+        lock_file,
         frozen=frozen,
         db=DEPENDENCY_MAPPING,
-        config=config_file.strpath,
+        config=str(config_file),
     )
 
-    fixed_lines = open(config_file.strpath).readlines()
+    with config_file.open("r") as f:
+        fixed_lines = f.readlines()
     fixed_rev_line = fixed_lines[2]
 
     assert fixed_rev_line == expected
@@ -93,11 +101,17 @@ def run_and_check(tmpdir: LocalPath, rev_line: str, expected: str, frozen: bool)
     assert retv == int(expected != rev_line)
 
 
-@pytest.mark.parametrize("rev_line,expected", zip(TEST_REVS, TEST_REVS_UNFROZEN))
-def test_frozen_disabled(tmpdir: LocalPath, rev_line: str, expected: str) -> None:
+@pytest.mark.parametrize(
+    "rev_line,expected", zip(TEST_REVS, TEST_REVS_UNFROZEN, strict=False)
+)
+def test_frozen_disabled(tmpdir: Path, rev_line: str, expected: str) -> None:
+    """Test frozen revisions handling with frozen disabled."""
     run_and_check(tmpdir, rev_line, expected, frozen=False)
 
 
-@pytest.mark.parametrize("rev_line,expected", zip(TEST_REVS, TEST_REVS_FROZEN))
-def test_frozen_enabled(tmpdir: LocalPath, rev_line: str, expected: str) -> None:
+@pytest.mark.parametrize(
+    "rev_line,expected", zip(TEST_REVS, TEST_REVS_FROZEN, strict=False)
+)
+def test_frozen_enabled(tmpdir: Path, rev_line: str, expected: str) -> None:
+    """Test frozen revisions handling."""
     run_and_check(tmpdir, rev_line, expected, frozen=True)

@@ -80,6 +80,7 @@ select = [
     "TID",  # tidy imports
 ]
 ignore = [
+    "C901",  # too complex
     "COM812",  # allow missing trailing comma
 ]
 
@@ -95,4 +96,3 @@ explicit_package_bases = true
 files = ["**/*.py"]
 namespace_packages = true
 show_error_codes = true
-

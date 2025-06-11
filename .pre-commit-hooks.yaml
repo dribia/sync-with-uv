@@ -1,6 +1,6 @@
-- id: sync_with_poetry
-  name: Sync with Poetry
-  description: Automatically sync pre-commit repos with package versions in poetry.lock
-  entry: swp
+- id: sync-with-uv
+  name: Sync with uv
+  description: Automatically sync pre-commit repos and additional dependencies with package versions in uv.lock
+  entry: swu
   language: python
-  files: poetry.lock
+  files: uv.lock

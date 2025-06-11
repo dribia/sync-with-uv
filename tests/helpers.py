@@ -1,4 +1,6 @@
-from typing import Optional
+"""Test helpers."""
+
+from pathlib import Path
 
 import yaml
 
@@ -43,15 +45,19 @@ CONFIG_CONTENT = (
     "  - repo: local\n"
     "    hooks:\n"
     "      - id: sync\n"
-    "        name: sync with poetry\n"
-    "        entry: swp\n"
+    "        name: sync with uv\n"
+    "        entry: swu\n"
     "        language: system\n"
-    "        files: poetry.lock\n"
+    "        files: uv.lock\n"
     "  # mypy\n"
     "  - repo: https://github.com/pre-commit/mirrors-mypy\n"
     "    rev: v0.812\n"
     "    hooks:\n"
     "      - id: mypy\n"
+    "        additional_dependencies:\n"
+    "        - foobarbaz>=0.9,<1\n"
+    "        - foobarbaz>=0.9,<1  # comment\n"
+    "        - FOOBARBAZ>=0.9,<1\n"
     "  # comment\n"
     "  - repo: https://github.com/pycqa/flake8\n"
     "    rev: 3.9.0\n"
@@ -83,25 +89,21 @@ CUSTOM_DEPENDENCY_MAPPING = {
 }
 
 
-def get_repo_version(filename: str, repo: str) -> Optional[str]:
-    """Return the version (i.e., rev) of a repo
+def get_repo_version(filepath: Path, repo: str) -> str | None:
+    """Return the version (i.e., rev) of a repo.
 
     Args:
-        filename (str): .pre-commit-config.yaml
-        repo (str): repo URL
+        filepath: .pre-commit-config.yaml.
+        repo: repo URL.
 
     Returns:
-        Optional[str]: the version of the repo
+        The version of the repo.
     """
-
-    with open(filename, "r") as stream:
+    with filepath.open("r") as stream:
         pre_commit_data = yaml.safe_load(stream)
-
     pre_config_repo = next(
         (item for item in pre_commit_data["repos"] if item["repo"] == repo), None
     )
-
     if pre_config_repo:
         return pre_config_repo["rev"]
-
     return None

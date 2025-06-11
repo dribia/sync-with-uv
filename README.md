@@ -1,78 +1,82 @@
-# Sync with poetry
+# Sync with uv
 
-[![CI](https://github.com/floatingpurr/sync_with_poetry/actions/workflows/ci.yml/badge.svg)](https://github.com/floatingpurr/sync_with_poetry/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/floatingpurr/sync_with_poetry/graph/badge.svg?token=T1KUB0CUON)](https://codecov.io/gh/floatingpurr/sync_with_poetry)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/floatingpurr/sync_with_poetry/main.svg)](https://results.pre-commit.ci/latest/github/floatingpurr/sync_with_poetry/main)
+[![CI](https://github.com/dribia/sync-with-uv/actions/workflows/ci.yml/badge.svg)](https://github.com/dribia/sync-with-uv/actions/workflows/ci.yml)
+[![codecov](https://img.shields.io/codecov/c/github/dribia/sync-with-uv?color=%2334D058)](https://codecov.io/gh/dribia/sync-with-uv)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/dribia/sync-with-uv/main.svg)](https://results.pre-commit.ci/latest/github/dribia/sync-with-uv/main)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-A .pre-commit hook for keeping in sync the repos `rev` in
-`.pre-commit-config.yaml` with the packages version locked into `poetry.lock`.
-Check out [pre-commit.com](https://pre-commit.com/) for more about the main
-framework.
+A pre-commit hook for keeping in sync the repos `rev` in
+`.pre-commit-config.yaml` with the packages version locked into `uv.lock`. Check
+out [pre-commit.com](https://pre-commit.com/) for more about the main framework.
 
-> Do you rely on [PDM](https://github.com/pdm-project/pdm)? See this equivalent
-> sync repo: [sync_with_pdm](https://github.com/floatingpurr/sync_with_pdm).
+> [!NOTE] This repository is strongly inspired in
+> [sync_with_poetry](https://github.com/floatingpurr/sync_with_poetry).
 
 ## What problem does this hook help us solve?
 
-When it comes to Python dependency management,
-[Poetry](https://python-poetry.org/) is one of the modern solutions to handle
-project dependencies. [Sometimes](https://stackoverflow.com/q/70127649/4820341),
-you might want to install dev dependencies locally (e.g., `ruff`, `black`,
-`flake8`, `isort`, `mypy`, ...) to make your IDE (e.g., VS Code) play nicely
-with dev packages. This approach usually turns on a live feedback as you code
-(e.g., suggestions, linting, formatting, errors highlighting). Poetry does not
-differentiates anymore between dev and production packages inside `poetry.lock`.
-Now, this info is managed by dependency groups in `pyproject.toml` (see
-[#26](https://github.com/floatingpurr/sync_with_poetry/issues/26) for more).
+When using `uv`, the package versions are locked in a file named `uv.lock`. This
+file contains the exact versions of the packages used in the project, ensuring
+that the same versions are used across environments. However, the
+`.pre-commit-config.yaml` file, which defines the pre-commit hooks and their
+repositories, may not always reflect the latest versions of the packages as
+specified in `uv.lock`.
 
-This hook updates the `rev` of each `repo` in `.pre-commit-config.yaml` with the
-corresponding package version stored in `poetry.lock`.
+This hook helps us keep the `rev` of each `repo` in `.pre-commit-config.yaml` in
+sync with the corresponding package version stored in `uv.lock`.
 
 E.g., starting from the following files:
 
 ```toml
-# poetry.lock
+# uv.lock
 [[package]]
-name = "black"
-version = "21.12b0"
-description = "The uncompromising code formatter."
-optional = false
-python-versions = ">=3.6.2"
+name = "mypy"
+version = "1.16.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [ ... ]
+sdist = { ... }
+wheels = [ ... ]
 ```
 
 ```yaml
 # .pre-commit-config.yaml
 repos:
-  # black - formatting
-  - repo: https://github.com/psf/black
-    rev: 21.11b1
+  # mypy - static type checker
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.15.1
     hooks:
-      - id: black
+      - id: mypy
 ```
 
-this hook will bump `black` in `.pre-commit-config.yaml` as follows:
+this hook will bump `mypy` in `.pre-commit-config.yaml` as follows:
 
 ```yaml
 # .pre-commit-config.yaml
 repos:
-  # black - formatting
-  - repo: https://github.com/psf/black
-    rev: 21.12b0
+  # mypy - static type checker
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.16.0
     hooks:
-      - id: black
+      - id: mypy
 ```
+
+### Additional dependencies
+
+Some pre-commit hooks may have additional dependencies with their own
+constraints. For example, the `mypy` hook may have an additional dependency on
+`pydantic`. This hook will sync those additional dependencies as well, ensuring
+that the versions of the additional dependencies are also in sync with the
+versions specified in `uv.lock`.
 
 ## Usage
 
 Excerpt from a `.pre-commit-config.yaml` using an example of this hook:
 
 ```yaml
-- repo: https://github.com/floatingpurr/sync_with_poetry
+- repo: https://github.com/dribia/sync-with-uv
   rev: "" # the revision or tag to clone at
   hooks:
-    - id: sync_with_poetry
+    - id: sync-with-uv
       args: [] # optional args
 ```
 
@@ -83,6 +87,8 @@ Excerpt from a `.pre-commit-config.yaml` using an example of this hook:
   --config CONFIG    Path to a custom .pre-commit-config.yaml file
   --db PACKAGE_LIST  Path to a custom package list (json)
   --allow-frozen     Trust `frozen: xxx` comments for frozen revisions.
+  --skip-additional-dependencies
+                    Skip matching versions for packages in hooks' additional dependencies.
 ```
 
 Usually this hook uses only dev packages to sync the hooks. Pass `--all`, if you
@@ -103,13 +109,15 @@ from `poetry.lock` even if the frozen revision specifies the same commit as the
 tag. This options relies on `frozen: xxx` comments appended to the line of the
 frozen revision where `xxx` will be the tag name corresponding to the commit
 hash used. If the comment specifies the same revision as the lock file nothing
-is changed. Otherwise the revision is replaced with the expected revision tag
+is changed. Otherwise, the revision is replaced with the expected revision tag
 and the `frozen: xxx` comment is removed.
+
+Pass `--skip-additional-dependencies` to skip matching versions for packages in
+hooks' additional dependencies.
 
 ## Supported packages
 
-Supported packages out-of-the-box are listed in
-[`db.py`](sync_with_poetry/db.py):
+Supported packages out-of-the-box are listed in [`db.py`](sync-with-uv/db.py):
 
 - autopep8
 - bandit
@@ -121,6 +129,9 @@ Supported packages out-of-the-box are listed in
 - mypy
 - pyupgrade
 - ruff
+- deptry
+- licenseheaders
+- sqlfluff
 
 You can create your very own package list, passing a custom json file with the
 arg `--db`. Such a file specifies how to map a package to the corresponding
@@ -142,9 +153,6 @@ leading `v`, you need to specify `"v${rev}"` as a `"<revision_template>"`. Use
 `"${rev}"` if both the package version and the repo `rev` follow the same
 pattern.
 
-Please, do not open PRs to extend [`db.py`](sync_with_poetry/db.py) anymore. Use
-your personal package list instead.
-
 ## Contributing
 
 See [CONTRIBUTING.md](.github/CONTRIBUTING.md).
@@ -152,4 +160,4 @@ See [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 ## Credits
 
 This hook is inspired by
-[pre-commit autoupdate](https://pre-commit.com/index.html#pre-commit-autoupdate).
+[sync_with_poetry](https://github.com/floatingpurr/sync_with_poetry).

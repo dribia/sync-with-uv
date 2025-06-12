@@ -146,8 +146,9 @@ def sync_repos(
                 f"{match[1]}-{match[2]}{match['quotes']}{package}"
                 f"=={uv_items.version[package]}{match['quotes']}  {match['rest']}"
             ).rstrip()
-            lines[idx] = f"{new_line}{match['eol']}"
-            retv |= 1
+            if lines[idx] != f"{new_line}{match['eol']}":
+                lines[idx] = f"{new_line}{match['eol']}"
+                retv |= 1
 
     with Path(config).open("w", newline="") as f:
         f.write("".join(lines))

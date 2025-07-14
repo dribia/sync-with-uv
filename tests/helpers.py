@@ -58,6 +58,7 @@ CONFIG_CONTENT = (
     "        - foobarbaz>=0.9,<1\n"
     "        - foobarbaz>=0.9,<1  # comment\n"
     "        - FOOBARBAZ>=0.9,<1\n"
+    "        - FOOBARBAZ[bla]>=0.9,<1\n"
     "  # comment\n"
     "  - repo: https://github.com/pycqa/flake8\n"
     "    rev: 3.9.0\n"

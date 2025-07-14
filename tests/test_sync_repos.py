@@ -15,7 +15,6 @@ from tests.helpers import (
 LEN_CONFIG_CONTENT = CONFIG_CONTENT.count("\n")
 
 
-# fmt: off
 @pytest.mark.parametrize(
     "test_input,expected",
     [
@@ -23,34 +22,31 @@ LEN_CONFIG_CONTENT = CONFIG_CONTENT.count("\n")
         (
             {"skip": []},
             {
-                "https://github.com/pre-commit/mirrors-mypy": "v0.910",     # bumped
-                "https://github.com/pycqa/flake8": "4.0.1",          # bumped
-                "https://github.com/psf/black": "21.11b1",           # bumped
-                "https://github.com/pycqa/isort": "5.10.1",          # not managed by uv
+                "https://github.com/pre-commit/mirrors-mypy": "v0.910",  # bumped
+                "https://github.com/pycqa/flake8": "4.0.1",  # bumped
+                "https://github.com/psf/black": "21.11b1",  # bumped
+                "https://github.com/pycqa/isort": "5.10.1",  # not managed by uv
             },
         ),
         # sync dependencies, skipping `flake8` and black
         (
             {"skip": ["black", "flake8"]},
-            # fmt: off
             {
-                "https://github.com/pre-commit/mirrors-mypy": "v0.910",   # bumped
-                "https://github.com/pycqa/flake8": "3.9.0",         # not bumped skipped
-                "https://github.com/psf/black": "20.8b1",           # not bumped skipped
-                "https://github.com/pycqa/isort": "5.10.1",         # not managed by uv
+                "https://github.com/pre-commit/mirrors-mypy": "v0.910",  # bumped
+                "https://github.com/pycqa/flake8": "3.9.0",  # not bumped skipped
+                "https://github.com/psf/black": "20.8b1",  # not bumped skipped
+                "https://github.com/pycqa/isort": "5.10.1",  # not managed by uv
             },
         ),
         # sync all dependencies from custom mapping
         (
             {"skip": [], "db": CUSTOM_DEPENDENCY_MAPPING},
             {
-                "https://example.org/fakepackages/foobarbaz": "1.0.1",   # bumped (main)
+                "https://example.org/fakepackages/foobarbaz": "1.0.1",  # bumped (main)
             },
-
         ),
     ],
 )
-# fmt: on
 def test_sync_repos(tmpdir: Path, test_input: dict, expected: dict) -> None:
     """Test repo synchronization against different inputs and configurations."""
     lock_file = tmpdir / "uv.lock"

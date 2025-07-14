@@ -13,7 +13,6 @@ from tests.helpers import (
 LEN_CONFIG_CONTENT = CONFIG_CONTENT.count("\n")
 
 
-# fmt: off
 @pytest.mark.parametrize(
     "test_input,expected",
     [
@@ -24,6 +23,7 @@ LEN_CONFIG_CONTENT = CONFIG_CONTENT.count("\n")
                 "- foobarbaz>=0.9,<1  # comment\n": False,
                 "- FOOBARBAZ>=0.9,<1\n": False,
                 "- foobarbaz==1.0.1\n": True,
+                "- foobarbaz[bla]==1.0.1\n": True,
             },
         ),
         (
@@ -37,7 +37,6 @@ LEN_CONFIG_CONTENT = CONFIG_CONTENT.count("\n")
         ),
     ],
 )
-# fmt: on
 def test_sync_repos(tmpdir: Path, test_input: dict, expected: dict) -> None:
     """Test repo synchronization against different inputs and configurations."""
     lock_file = tmpdir / "uv.lock"

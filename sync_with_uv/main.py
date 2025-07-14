@@ -19,7 +19,7 @@ REV_LINE_RE = re.compile(
 )
 FROZEN_REV_RE = re.compile(r"[a-f\d]{40}")
 ADD_DEP_RE = re.compile(
-    r'^(\s+)-(\s*)(?P<quotes>[\'"]?)(?P<package>[A-Za-z0-9-_]+)(?P<limit>[><=]\S+)(?P=quotes)(\s*)(?P<rest>.*?)(?P<eol>\r?\n)$'
+    r'^(\s+)-(\s*)(?P<quotes>[\'"]?)(?P<package>[A-Za-z0-9-_]+)(?P<extras>(\[.*\])?)(?P<limit>[><=]\S+)(?P=quotes)(\s*)(?P<rest>.*?)(?P<eol>\r?\n)$'
 )
 
 
@@ -143,7 +143,7 @@ def sync_repos(
             if package not in uv_items.version:
                 continue
             new_line = (
-                f"{match[1]}-{match[2]}{match['quotes']}{package}"
+                f"{match[1]}-{match[2]}{match['quotes']}{package}{match['extras']}"
                 f"=={uv_items.version[package]}{match['quotes']}  {match['rest']}"
             ).rstrip()
             if lines[idx] != f"{new_line}{match['eol']}":

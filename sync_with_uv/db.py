@@ -37,6 +37,10 @@ DEPENDENCY_MAPPING = {
         "repo": "https://github.com/asottile/pyupgrade",
         "rev": "v${rev}",
     },
+    "check-jsonschema": {
+        "repo": "https://github.com/python-jsonschema/check-jsonschema",
+        "rev": "${rev}",
+    },
     "ruff": {
         "repo": "https://github.com/astral-sh/ruff-pre-commit",
         "rev": "v${rev}",

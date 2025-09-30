@@ -1,6 +1,6 @@
 [project]
 name = "sync-with-uv"
-version = "0.1.1"
+version = "0.1.2"
 description = "Sync .pre-commit-config.yaml repos starting from uv.lock"
 authors = [{ name = "Dribia Data Research", email = "code@dribia.com" }]
 requires-python = ">=3.10"

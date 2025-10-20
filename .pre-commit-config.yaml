@@ -1,5 +1,7 @@
 ci:
   skip: [sync]
+  autofix_commit_msg: 🎨 [pre-commit.ci] Auto format from pre-commit.com hooks
+  autoupdate_commit_msg: ⬆ [pre-commit.ci] pre-commit autoupdate
 
 minimum_pre_commit_version: 2.15.0
 

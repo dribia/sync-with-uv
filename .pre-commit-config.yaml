@@ -52,4 +52,8 @@ repos:
     rev: v0.7.19
     hooks:
       - id: tombi-format
+        args:
+          - --offline
       - id: tombi-lint
+        args:
+          - --offline

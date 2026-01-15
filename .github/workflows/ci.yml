@@ -36,9 +36,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
           enable-cache: true
 
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
-
       - name: Install dependencies
         run: uv sync
 

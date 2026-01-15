@@ -3,7 +3,7 @@ name = "sync-with-uv"
 version = "0.1.2"
 description = "Sync .pre-commit-config.yaml repos starting from uv.lock"
 authors = [{ name = "Dribia Data Research", email = "code@dribia.com" }]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "pyyaml>=6.0.2,<7",
     "tomlkit>=0.13.3,<0.14",

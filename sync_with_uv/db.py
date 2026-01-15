@@ -51,4 +51,8 @@ DEPENDENCY_MAPPING = {
         "rev": "v${rev}",
     },
     "sqlfluff": {"repo": "https://github.com/sqlfluff/sqlfluff", "rev": "${rev}"},
+    "tombi": {
+        "repo": "https://github.com/tombi-toml/tombi-pre-commit",
+        "rev": "v${rev}",
+    },
 }

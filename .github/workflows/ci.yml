@@ -33,8 +33,10 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          python-version: ${{ inputs.python-version }}
           enable-cache: true
+
+      - name: Install Python ${{ inputs.python-version }}
+        run: uv python install ${{ inputs.python-version }}
 
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"

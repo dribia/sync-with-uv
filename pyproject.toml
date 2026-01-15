@@ -2,11 +2,11 @@
 name = "sync-with-uv"
 version = "0.1.2"
 description = "Sync .pre-commit-config.yaml repos starting from uv.lock"
-authors = [{ name = "Dribia Data Research", email = "code@dribia.com" }]
 requires-python = ">=3.10"
+authors = [{ name = "Dribia Data Research", email = "code@dribia.com" }]
 dependencies = [
-    "pyyaml>=6.0.2,<7",
-    "tomlkit>=0.13.3,<0.14",
+  "pyyaml>=6.0.2,<7",
+  "tomlkit>=0.13.3,<0.15",
 ]
 
 [project.scripts]
@@ -14,29 +14,31 @@ swu = "sync_with_uv.main:main"
 
 [dependency-groups]
 dev = [
-    "pre-commit>=4.3.0,<5",
+  "pre-commit>=4.3.0,<5",
+  "prek>=0.2.28,<1",
+  "tombi>=0.7.19,<1",
 ]
 ci = [
-    "setuptools>=80.9.0,<81",
+  "setuptools>=80.9.0,<81",
 ]
 lint = [
-    "ruff==0.14.11",
-    "mypy==1.19.1",
-    "types-pyyaml>=6.0.12,<7",
+  "mypy==1.19.1",
+  "ruff==0.14.11",
+  "types-pyyaml>=6.0.12,<7",
 ]
 test = [
-    "pytest>=8.4.2,<10",
-    "pytest-cov>=7.0.0,<8",
-    "coverage[toml]>=7.10.7,<8",
+  "coverage[toml]>=7.13.1,<8",
+  "pytest>=8.4.2,<10",
+  "pytest-cov>=7.0.0,<8",
 ]
 
 [tool.uv]
 required-version = ">=0.7.20,<1.0"
 default-groups = [
-    "dev",
-    "ci",
-    "lint",
-    "test",
+  "dev",
+  "ci",
+  "lint",
+  "test",
 ]
 
 [build-system]
@@ -52,36 +54,36 @@ target-version = "py313"
 
 [tool.ruff.lint]
 select = [
-    "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
-    "F",  # pyflakes
-    "I",  # isort
-    "C",  # convention
-    "B",  # flake8-bugbear
-    "D",  # pydocstyle
-    "UP",  # pyupgrade
-    "N",  # pep8-naming
-    "NPY",  # numpy
-    "PD",   # pandas
-    "RUF",  # ruff
-    "PTH",  # pathlib
-    "SIM",  # simplify
-    "RET",  # return
-    "RSE",  # raise
-    "Q",  # quotes
-    "G",  # logging-format
-    "LOG",  # logging
-    "ISC",  # implicit str concat
-    "C4",  # comprehensions
-    "COM",  # commas
-    "TD",  # to-do
-    "INT",  # gettext
-    "TRY",  # tryceratops
-    "TID",  # tidy imports
+  "E",  # pycodestyle errors
+  "W",  # pycodestyle warnings
+  "F",  # pyflakes
+  "I",  # isort
+  "C",  # convention
+  "B",  # flake8-bugbear
+  "D",  # pydocstyle
+  "UP",  # pyupgrade
+  "N",  # pep8-naming
+  "NPY",  # numpy
+  "PD",  # pandas
+  "RUF",  # ruff
+  "PTH",  # pathlib
+  "SIM",  # simplify
+  "RET",  # return
+  "RSE",  # raise
+  "Q",  # quotes
+  "G",  # logging-format
+  "LOG",  # logging
+  "ISC",  # implicit str concat
+  "C4",  # comprehensions
+  "COM",  # commas
+  "TD",  # to-do
+  "INT",  # gettext
+  "TRY",  # tryceratops
+  "TID",  # tidy imports
 ]
 ignore = [
-    "C901",  # too complex
-    "COM812",  # allow missing trailing comma
+  "C901",  # too complex
+  "COM812",  # allow missing trailing comma
 ]
 
 [tool.ruff.lint.isort]

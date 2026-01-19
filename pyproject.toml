@@ -23,7 +23,7 @@ ci = [
 ]
 lint = [
   "mypy==1.19.1",
-  "ruff==0.14.11",
+  "ruff==0.14.13",
   "types-pyyaml>=6.0.12,<7",
 ]
 test = [

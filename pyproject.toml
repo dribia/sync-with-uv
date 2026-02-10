@@ -19,11 +19,11 @@ dev = [
   "tombi>=0.7.19,<1",
 ]
 ci = [
-  "setuptools>=80.9.0,<81",
+  "setuptools>=80.9.0,<83",
 ]
 lint = [
   "mypy==1.19.1",
-  "ruff==0.14.14",
+  "ruff==0.15.0",
   "types-pyyaml>=6.0.12,<7",
 ]
 test = [

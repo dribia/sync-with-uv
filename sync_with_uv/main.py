@@ -50,7 +50,7 @@ class UVItems:
             if package["name"] in skip:
                 continue
 
-            dependency_mapping = db.get(package["name"], None)
+            dependency_mapping = db.get(package["name"])
             if dependency_mapping:
                 name = package["name"]
                 repo = dependency_mapping["repo"]

@@ -31,7 +31,7 @@ repos:
       - id: check-toml
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.5
+    rev: v0.15.6
     hooks:
       - id: ruff-check
         types_or: [python, pyi, jupyter]
@@ -49,7 +49,7 @@ repos:
           - types-pyyaml==6.0.12.20250915
 
   - repo: https://github.com/tombi-toml/tombi-pre-commit
-    rev: v0.9.4
+    rev: v0.9.6
     hooks:
       - id: tombi-format
         args:

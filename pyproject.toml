@@ -21,9 +21,9 @@ ci = [
   "setuptools>=80.9.0,<83",
 ]
 lint = [
-  "mypy==1.19.1",
   "ruff==0.15.6",
   "tombi==0.9.7",
+  "ty==0.0.23",
   "types-pyyaml>=6.0.12,<7",
 ]
 test = [

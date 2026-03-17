@@ -40,13 +40,15 @@ repos:
       - id: ruff-format
         types_or: [python, pyi, jupyter]
 
-  # mypy - lint-like type checking
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.19.1
+  # ty - lint-like type checking
+  - repo: local
     hooks:
-      - id: mypy
-        additional_dependencies:
-          - types-pyyaml==6.0.12.20250915
+    - id: ty
+      name: ty check
+      entry: uv run --frozen ty check
+      language: system
+      pass_filenames: false
+      always_run: true
 
   - repo: https://github.com/tombi-toml/tombi-pre-commit
     rev: v0.9.7

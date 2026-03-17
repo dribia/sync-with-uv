@@ -49,7 +49,7 @@ repos:
           - types-pyyaml==6.0.12.20250915
 
   - repo: https://github.com/tombi-toml/tombi-pre-commit
-    rev: v0.9.6
+    rev: v0.9.7
     hooks:
       - id: tombi-format
         args:

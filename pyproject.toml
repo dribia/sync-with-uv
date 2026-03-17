@@ -15,19 +15,19 @@ swu = "sync_with_uv.main:main"
 [dependency-groups]
 dev = [
   "pre-commit>=4.3.0,<5",
-  "prek>=0.2.28,<1",
-  "tombi>=0.7.19,<1",
+  "prek>=0.3.6,<1",
 ]
 ci = [
   "setuptools>=80.9.0,<83",
 ]
 lint = [
   "mypy==1.19.1",
-  "ruff==0.15.5",
+  "ruff==0.15.6",
+  "tombi==0.9.7",
   "types-pyyaml>=6.0.12,<7",
 ]
 test = [
-  "coverage[toml]>=7.13.1,<8",
+  "coverage[toml]>=7.13.5,<8",
   "pytest>=8.4.2,<10",
   "pytest-cov>=7.0.0,<8",
 ]

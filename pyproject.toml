@@ -92,6 +92,7 @@ convention = "google"
 
 [tool.uv]
 required-version = ">=0.7.20,<1.0"
+exclude-newer = "7 days"
 default-groups = [
   "dev",
   "ci",

@@ -51,7 +51,7 @@ repos:
       always_run: true
 
   - repo: https://github.com/tombi-toml/tombi-pre-commit
-    rev: v0.9.24
+    rev: v0.10.3
     hooks:
       - id: tombi-format
         args:

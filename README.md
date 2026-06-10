@@ -130,6 +130,7 @@ Supported packages out-of-the-box are listed in [`db.py`](sync-with-uv/db.py):
 - mypy
 - pyupgrade
 - ruff
+- ty
 - deptry
 - licenseheaders
 - sqlfluff

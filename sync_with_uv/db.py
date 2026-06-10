@@ -45,6 +45,10 @@ DEPENDENCY_MAPPING = {
         "repo": "https://github.com/astral-sh/ruff-pre-commit",
         "rev": "v${rev}",
     },
+    "ty": {
+        "repo": "https://github.com/astral-sh/ty-pre-commit",
+        "rev": "v${rev}",
+    },
     "deptry": {"repo": "https://github.com/fpgmaas/deptry.git", "rev": "${rev}"},
     "licenseheaders": {
         "repo": "https://github.com/johann-petrak/licenseheaders.git",

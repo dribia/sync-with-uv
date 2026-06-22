@@ -15,7 +15,7 @@ swu = "sync_with_uv.main:main"
 [dependency-groups]
 dev = [
   "pre-commit>=4.6.0,<5",
-  "prek>=0.4.3,<1",
+  "prek>=0.4.5,<1",
 ]
 ci = [
   "setuptools>=80.9.0,<83",

@@ -59,5 +59,5 @@ DEPENDENCY_MAPPING = {
         "repo": "https://github.com/tombi-toml/tombi-pre-commit",
         "rev": "v${rev}",
     },
-    "djlint": {"repo": "https://github.com/djlint/djLint", "rev": "${rev}"},
+    "djlint": {"repo": "https://github.com/djlint/djLint", "rev": "v${rev}"},
 }

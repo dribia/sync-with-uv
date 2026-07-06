@@ -41,14 +41,10 @@ repos:
         types_or: [python, pyi, jupyter]
 
   # ty - lint-like type checking
-  - repo: local
+  - repo: https://github.com/astral-sh/ty-pre-commit
+    rev: v0.0.55
     hooks:
-    - id: ty
-      name: ty check
-      entry: uv run --frozen ty check
-      language: system
-      pass_filenames: false
-      always_run: true
+      - id: ty
 
   - repo: https://github.com/tombi-toml/tombi-pre-commit
     rev: v1.1.6

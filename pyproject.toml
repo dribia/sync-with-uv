@@ -18,11 +18,11 @@ dev = [
   "prek>=0.4.5,<1",
 ]
 ci = [
-  "setuptools>=80.9.0,<83",
+  "setuptools>=83.0.0,<84",
 ]
 lint = [
   "ruff==0.15.20",
-  "tombi==1.1.6",
+  "tombi==1.2.0",
   "ty==0.0.55",
   "types-pyyaml>=6.0.12,<7",
 ]

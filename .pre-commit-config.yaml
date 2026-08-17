@@ -31,7 +31,7 @@ repos:
       - id: check-toml
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.2
+    rev: v0.16.3
     hooks:
       - id: ruff-check
         types_or: [python, pyi, jupyter]
@@ -42,12 +42,12 @@ repos:
 
   # ty - lint-like type checking
   - repo: https://github.com/astral-sh/ty-pre-commit
-    rev: v0.0.69
+    rev: v0.0.72
     hooks:
       - id: ty
 
   - repo: https://github.com/tombi-toml/tombi-pre-commit
-    rev: v1.2.10
+    rev: v1.4.1
     hooks:
       - id: tombi-format
         args:

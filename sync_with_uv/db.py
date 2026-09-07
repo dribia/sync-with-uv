@@ -60,4 +60,8 @@ DEPENDENCY_MAPPING = {
         "rev": "v${rev}",
     },
     "djlint": {"repo": "https://github.com/djlint/djLint", "rev": "v${rev}"},
+    "zizmor": {
+        "repo": "https://github.com/zizmorcore/zizmor-pre-commit",
+        "rev": "v${rev}",
+    },
 }

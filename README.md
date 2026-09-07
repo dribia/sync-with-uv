@@ -136,6 +136,7 @@ Supported packages out-of-the-box are listed in [`db.py`](sync-with-uv/db.py):
 - sqlfluff
 - tombi
 - djlint
+- zizmor
 
 You can create your very own package list, passing a custom json file with the
 arg `--db`. Such a file specifies how to map a package to the corresponding

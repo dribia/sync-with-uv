@@ -102,7 +102,7 @@ Pass `--config <config_file>` to point to an alternative config file (it
 defaults to `.pre-commit-config.yaml`).
 
 Pass `--db <package_list_file>` to point to an alternative package list (json).
-Such a file overrides the mapping in [`db.py`](sync_with_poetry/db.py).
+Such a file overrides the mapping in [`db.py`](sync_with_uv/db.py).
 
 Pass `--allow-frozen` if you want to use frozen revisions in your config.
 Without this option _SWP_ will replace frozen revisions with the tag name taken
@@ -118,7 +118,7 @@ hooks' additional dependencies.
 
 ## Supported packages
 
-Supported packages out-of-the-box are listed in [`db.py`](sync-with-uv/db.py):
+Supported packages out-of-the-box are listed in [`db.py`](sync_with_uv/db.py):
 
 - autopep8
 - bandit

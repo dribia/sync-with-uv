@@ -118,7 +118,7 @@ hooks' additional dependencies.
 
 ## Supported packages
 
-Supported packages out-of-the-box are listed in [`db.py`](sync-with-uv/db.py):
+Supported packages out-of-the-box are listed in [`db.py`](sync_with_uv/db.py):
 
 - autopep8
 - bandit
